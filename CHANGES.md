@@ -1,6 +1,8 @@
 CHANGES
 =======
 
+- Renamed `api` in `BaseEndpoint` to `Api`.
+
 v1.0.1 (2019-09-19)
 -------------------
 

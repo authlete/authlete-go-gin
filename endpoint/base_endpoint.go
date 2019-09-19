@@ -25,7 +25,7 @@ import (
 )
 
 type BaseEndpoint struct {
-	api api.AuthleteApi
+	Api api.AuthleteApi
 }
 
 // CallerAuthenticateFunc is a function that performs authentication of endpoint callers.
@@ -35,8 +35,8 @@ type CallerAuthenticateFunc func(*gin.Context) bool
 type CallerRejectFunc func(*gin.Context)
 
 func (self *BaseEndpoint) GetAuthleteApi(ctx *gin.Context) api.AuthleteApi {
-	if self.api != nil {
-		return self.api
+	if self.Api != nil {
+		return self.Api
 	}
 
 	// Extract the value of `AuthleteApi` which has been added by
@@ -54,7 +54,7 @@ func (self *BaseEndpoint) GetAuthleteApi(ctx *gin.Context) api.AuthleteApi {
 		return nil
 	}
 
-	self.api = api
+	self.Api = api
 
 	return api
 }
