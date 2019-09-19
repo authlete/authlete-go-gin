@@ -32,8 +32,6 @@ type BaseReqHandler struct {
 
 func (self *BaseReqHandler) Init(api api.AuthleteApi) {
 	self.Api = api
-	self.ReqUtil = web.RequestUtility{}
-	self.ResUtil = web.ResponseUtility{}
 }
 
 func (self *BaseReqHandler) UnknownAction(ctx *gin.Context, apiPath string) {
