@@ -1,6 +1,9 @@
 CHANGES
 =======
 
+v1.0.3 (2019-09-20)
+-------------------
+
 - Added `ReqUtil` and `ResUtil` to `BaseEndpoint`.
 
 v1.0.2 (2019-09-19)
