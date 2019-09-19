@@ -25,7 +25,9 @@ import (
 )
 
 type BaseEndpoint struct {
-	Api api.AuthleteApi
+	Api     api.AuthleteApi
+	ReqUtil web.RequestUtility
+	ResUtil web.ResponseUtility
 }
 
 // CallerAuthenticateFunc is a function that performs authentication of endpoint callers.
