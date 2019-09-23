@@ -1,6 +1,8 @@
 CHANGES
 =======
 
+- Added `no_interaction_handler.go`.
+
 v1.0.3 (2019-09-20)
 -------------------
 
