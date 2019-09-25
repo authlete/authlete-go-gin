@@ -1,6 +1,7 @@
 CHANGES
 =======
 
+- Modified `ClaimCollector` to regard empty strings as "not available".
 - Added `no_interaction_handler.go`.
 
 v1.0.3 (2019-09-20)
@@ -23,4 +24,3 @@ v1.0.0 (2019-09-19)
 -------------------
 
 - First release
-

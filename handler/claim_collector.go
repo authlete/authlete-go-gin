@@ -117,6 +117,12 @@ func (self *ClaimCollector) Collect() map[string]interface{} {
 			continue
 		}
 
+		// If the type is string but its value is empty.
+		str, ok := value.(string)
+		if ok && str == `` {
+			continue
+		}
+
 		// Just for an edge case where claimName ends with '#'. e.g. 'family_name#'
 		if tag == `` {
 			claimName = name
