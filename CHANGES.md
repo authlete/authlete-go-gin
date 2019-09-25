@@ -1,6 +1,9 @@
 CHANGES
 =======
 
+v1.0.4 (2019-09-25)
+-------------------
+
 - Updated the version of authlete-go this library refers to from v1.0.4 to v1.0.5.
 - Modified `ClaimCollector` to regard empty strings as "unavailable".
 - Added `no_interaction_handler.go`.
