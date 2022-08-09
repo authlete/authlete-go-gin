@@ -1,6 +1,18 @@
 変更点
 ======
 
+- `TokenReqHandler` 構造体
+    * `TokenAction_TOKEN_EXCHANGE` をサポート。
+
+- `TokenReqHandlerSpi` インターフェース
+    * `TokenExchange(ctx *gin.Context, res *dto.TokenResponse)` メソッドを追加。
+
+- `TokenReqHandlerSpiAdapter` 構造体
+    * `TokenExchange(ctx *gin.Context, res *dto.TokenResponse)` メソッドを実装。
+
+- `go.mod`
+    * authlete-go のバージョンを v1.0.5 から v1.1.6 へ更新。
+
 v1.0.4 (2019 年 09 月 25 日)
 ----------------------------
 
