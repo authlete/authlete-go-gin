@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2019 Authlete, Inc.
+// Copyright (C) 2019-2022 Authlete, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package spi
 
 import (
 	"github.com/authlete/authlete-go/dto"
+	"github.com/gin-gonic/gin"
 )
 
 type TokenReqHandlerSpi interface {
@@ -25,7 +26,7 @@ type TokenReqHandlerSpi interface {
 	//
 	// This method is called only when Resource Owner Password Credentials
 	// Grant (RFC 6749, 4.3) was used. Therefore, if you have no plan to
-	// supporte the flow, always return None. In mose cases, you don't
+	// support the flow, always return None. In most cases, you don't
 	// have to support the flow. RFC 6749 says "The authorization server
 	// should take special care when enabling this grant type and only
 	// allow it when other flows are not viable."
@@ -51,4 +52,48 @@ type TokenReqHandlerSpi interface {
 	//
 	// List of properties.
 	GetProperties() []dto.Property
+
+	// Handle a token exchange request.
+	//
+	// This method is called when the grant type of the token request is
+	// "urn:ietf:params:oauth:grant-type:token-exchange". The grant type is
+	// defined in RFC 8693 OAuth 2.0 Token Exchange.
+	//
+	// RFC 8693 is very flexible. In other words, the specification does not
+	// define details that are necessary for secure token exchange. Therefore,
+	// implementations have to complement the specification with their own rules.
+	//
+	// The second argument passed to this method is an instance of TokenResponse
+	// that represents a response from Authlete's /auth/token API. The instance
+	// contains information about the token exchange request such as the value
+	// of the "subject_token" request parameter. Implementations of this method
+	// are supposed to (1) validate the information based on their own rules,
+	// (2) generate a token (e.g. an access token) using the information, and
+	// (3) prepare a token response in the JSON format that conforms to Section
+	// 2.2 of RFC 8693.
+	//
+	// Authlete's /auth/token API performs validation of token exchange requests
+	// to some extent. Therefore, authorization server implementations don't
+	// have to repeat the same validation steps. See the online document on
+	// Authlete website for details.
+	//
+	// NOTE: Token Exchange is supported by Authlete 2.3 and newer versions.
+	// If the Authlete server of your system is older than version 2.3, the
+	// grant type ("urn:ietf:params:oauth:grant-type:token-exchange") is not
+	// supported and so this method is never called.
+	//
+	// Since v1.0.5.
+	//
+	// ARGS
+	//
+	//     ctx: A context which can be used to prepare a token response
+	//     res: A response from Authlete's /auth/token API
+	//
+	// RETURNS
+	//
+	// true to indicate that the implementation of this method has prepared
+	// a token response. false to indicate that the implementation of this
+	// method has done nothing. When false is returned, TokenReqHandler
+	// will generate 400 Bad Request with "error":"unsupported_grant_type".
+	TokenExchange(ctx *gin.Context, res *dto.TokenResponse) bool
 }

@@ -77,6 +77,9 @@ func (self *TokenReqHandler) Handle(ctx *gin.Context) {
 	case dto.TokenAction_OK:
 		// 200 OK
 		self.ResUtil.OkJson(ctx, content)
+	case dto.TokenAction_TOKEN_EXCHANGE:
+		// Process the token exchange request (RFC 8693)
+		self.handleTokenExchange(ctx, res)
 	default:
 		// 500 Internal Server Error
 		// /api/auth/token API returned an unknown action.
@@ -125,4 +128,27 @@ func (self *TokenReqHandler) handlePassword(ctx *gin.Context, res *dto.TokenResp
 
 	// Issue tokens.
 	self.TokenIssue(ctx, ticket, subject, self.Spi.GetProperties())
+}
+
+func (self *TokenReqHandler) handleTokenExchange(ctx *gin.Context, res *dto.TokenResponse) {
+	// Let the SPI implementation handle the token exchange request.
+	handled := self.Spi.TokenExchange(ctx, res)
+
+	// If the SPI implementation has prepared a token response.
+	if handled {
+		// Use the prepared token response.
+		return
+	}
+
+	// Generate a token response that indicates that the grant type
+	// ("urn:ietf:params:oauth:grant-type:token-exchange") is not
+	// supported.
+	//
+	//     400 Bad Request
+	//     Content-Type: application/json
+	//
+	//     {"error":"unsupported_grant_type"}
+	//
+	content := `{"error":"unsupported_grant_type"}`
+	self.ResUtil.BadRequest(ctx, content)
 }

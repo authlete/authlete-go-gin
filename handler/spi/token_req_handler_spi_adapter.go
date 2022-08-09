@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2019 Authlete, Inc.
+// Copyright (C) 2019-2022 Authlete, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package spi
 
 import (
 	"github.com/authlete/authlete-go/dto"
+	"github.com/gin-gonic/gin"
 )
 
 type TokenReqHandlerSpiAdapter struct {
@@ -29,4 +30,8 @@ func (self *TokenReqHandlerSpiAdapter) AuthenticateUser(username string, passwor
 
 func (self *TokenReqHandlerSpiAdapter) GetProperties() []dto.Property {
 	return nil
+}
+
+func (self *TokenReqHandlerSpiAdapter) TokenExchange(ctx *gin.Context, res *dto.TokenResponse) bool {
+	return false
 }

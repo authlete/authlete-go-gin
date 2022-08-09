@@ -1,6 +1,18 @@
 CHANGES
 =======
 
+- `TokenReqHandler` struct
+    * Supported `TokenAction_TOKEN_EXCHANGE`.
+
+- `TokenReqHandlerSpi` interface
+    * Added `TokenExchange(ctx *gin.Context, res *dto.TokenResponse)` method.
+
+- `TokenReqHandlerSpiAdapter` struct
+    * Implemented `TokenExchange(ctx *gin.Context, res *dto.TokenResponse)` method.
+
+- `go.mod`
+    * Updated the version of authlete-go from v1.0.5 to v1.1.6.
+
 v1.0.4 (2019-09-25)
 -------------------
 
