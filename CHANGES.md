@@ -1,6 +1,9 @@
 CHANGES
 =======
 
+v1.0.5 (2022-08-09)
+-------------------
+
 - `TokenReqHandler` struct
     * Supported `TokenAction_TOKEN_EXCHANGE`.
 

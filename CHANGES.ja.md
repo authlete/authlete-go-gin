@@ -1,6 +1,9 @@
 変更点
 ======
 
+v1.0.5 (2022 年 08 月 09 日)
+----------------------------
+
 - `TokenReqHandler` 構造体
     * `TokenAction_TOKEN_EXCHANGE` をサポート。
 
