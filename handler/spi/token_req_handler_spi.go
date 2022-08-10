@@ -96,4 +96,54 @@ type TokenReqHandlerSpi interface {
 	// method has done nothing. When false is returned, TokenReqHandler
 	// will generate 400 Bad Request with "error":"unsupported_grant_type".
 	TokenExchange(ctx *gin.Context, res *dto.TokenResponse) bool
+
+	// Handle a token request that uses the grant type
+	// "urn:ietf:params:oauth:grant-type:jwt-bearer" (RFC 7523).
+	//
+	// This method is called when the grant type of the token request is
+	// "urn:ietf:params:oauth:grant-type:jwt-bearer". The grant type is
+	// defined in RFC 7523: JSON Web Token (JWT) Profile for OAuth 2.0
+	// Client Authentication and Authorization Grants.
+	//
+	// The grant type utilizes a JWT as an authorization grant, but the
+	// specification does not define details about how the JWT is generated
+	// by whom. As a result, it is not defined in the specification how to
+	// obtain the key whereby to verify the signature of the JWT. Therefore,
+	// each deployment has to define their own rules which are necessary to
+	// determine the key for signature verification.
+	//
+	// The second argument passed to this method is an instance of
+	// TokenResponse that represents a response from Authlete's /auth/token
+	// API. The instance contains information about the token request such
+	// as the value of the "assertion" request parameter. Implementations
+	// of this method are supposed to (1) validate the authorization grant
+	// (= the JWT specified by the "assertion" request parameter), (2)
+	// generate an access token, and (3) prepare a token response in the
+	// JSON format that conforms to RFC 6749.
+	//
+	// Authlete's /auth/token API performs validation of token requests
+	// to some extent. Therefore, authorization server implementations
+	// don't have to repeat the same validation steps. Basically, what
+	// implementations have to do is to verify the signature of the JWT.
+	// See the online document on Authlete website for details.
+	//
+	// NOTE: JWT Authorization Grant is supported by Authlete 2.3 and newer
+	// versions. If the Authlete server of your system is older than version
+	// 2.3, the grant type ("urn:ietf:params:oauth:grant-type:jwt-bearer")
+	// is not supported and so this method is never called.
+	//
+	// Since v1.0.6.
+	//
+	// ARGS
+	//
+	//     ctx: A context which can be used to prepare a token response
+	//     res: A response from Authlete's /auth/token API
+	//
+	// RETURNS
+	//
+	// true to indicate that the implementation of this method has prepared
+	// a token response. false to indicate that the implementation of this
+	// method has done nothing. When false is returned, TokenReqHandler
+	// will generate 400 Bad Request with "error":"unsupported_grant_type".
+	JwtBearer(ctx *gin.Context, res *dto.TokenResponse) bool
 }

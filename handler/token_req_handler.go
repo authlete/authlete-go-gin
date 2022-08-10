@@ -80,6 +80,10 @@ func (self *TokenReqHandler) Handle(ctx *gin.Context) {
 	case dto.TokenAction_TOKEN_EXCHANGE:
 		// Process the token exchange request (RFC 8693)
 		self.handleTokenExchange(ctx, res)
+	case dto.TokenAction_JWT_BEARER:
+		// Process the token request that uses the grant type
+		// urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523).
+		self.handleJwtBearer(ctx, res)
 	default:
 		// 500 Internal Server Error
 		// /api/auth/token API returned an unknown action.
@@ -134,15 +138,30 @@ func (self *TokenReqHandler) handleTokenExchange(ctx *gin.Context, res *dto.Toke
 	// Let the SPI implementation handle the token exchange request.
 	handled := self.Spi.TokenExchange(ctx, res)
 
-	// If the SPI implementation has prepared a token response.
-	if handled {
-		// Use the prepared token response.
-		return
+	// If the SPI implementation has not prepared a token response.
+	if !handled {
+		// Generate a token response that indicates that the grant type
+		// is not supported.
+		self.unsupportedGrantType(ctx)
 	}
+}
+
+func (self *TokenReqHandler) handleJwtBearer(ctx *gin.Context, res *dto.TokenResponse) {
+	// Let the SPI implementation handle the token request.
+	handled := self.Spi.JwtBearer(ctx, res)
+
+	// If the SPI implementation has not prepared a token response.
+	if !handled {
+		// Generate a token response that indicates that the grant type
+		// is not supported.
+		self.unsupportedGrantType(ctx)
+	}
+}
+
+func (self *TokenReqHandler) unsupportedGrantType(ctx *gin.Context) {
 
 	// Generate a token response that indicates that the grant type
-	// ("urn:ietf:params:oauth:grant-type:token-exchange") is not
-	// supported.
+	// is not supported.
 	//
 	//     400 Bad Request
 	//     Content-Type: application/json
