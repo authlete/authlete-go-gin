@@ -1,6 +1,18 @@
 変更点
 ======
 
+- `TokenReqHandler` 構造体
+    * `TokenAction_JWT_BEARER` をサポート。
+
+- `TokenReqHandlerSpi` インターフェース
+    * `JwtBearer(ctx *gin.Context, res *dto.TokenResponse)` メソッドを追加。
+
+- `TokenReqHandlerSpiAdapter` 構造体
+    * `JwtBearer(ctx *gin.Context, res *dto.TokenResponse)` メソッドを実装。
+
+- `go.mod`
+    * authlete-go のバージョンを v1.1.6 から v1.1.7 へ更新。
+
 v1.0.5 (2022 年 08 月 09 日)
 ----------------------------
 

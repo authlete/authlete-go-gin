@@ -35,3 +35,7 @@ func (self *TokenReqHandlerSpiAdapter) GetProperties() []dto.Property {
 func (self *TokenReqHandlerSpiAdapter) TokenExchange(ctx *gin.Context, res *dto.TokenResponse) bool {
 	return false
 }
+
+func (self *TokenReqHandlerSpiAdapter) JwtBearer(ctx *gin.Context, res *dto.TokenResponse) bool {
+	return false
+}

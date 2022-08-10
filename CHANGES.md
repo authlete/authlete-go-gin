@@ -1,6 +1,18 @@
 CHANGES
 =======
 
+- `TokenReqHandler` struct
+    * Supported `TokenAction_JWT_BEARER`.
+
+- `TokenReqHandlerSpi` interface
+    * Added `JwtBearer(ctx *gin.Context, res *dto.TokenResponse)` method.
+
+- `TokenReqHandlerSpiAdapter` struct
+    * Implemented `JwtBearer(ctx *gin.Context, res *dto.TokenResponse)` method.
+
+- `go.mod`
+    * Updated the version of authlete-go from v1.1.6 to v1.1.7.
+
 v1.0.5 (2022-08-09)
 -------------------
 
