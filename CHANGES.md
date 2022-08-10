@@ -1,6 +1,9 @@
 CHANGES
 =======
 
+v1.0.6 (2022-08-11)
+-------------------
+
 - `TokenReqHandler` struct
     * Supported `TokenAction_JWT_BEARER`.
 
