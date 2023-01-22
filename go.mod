@@ -3,8 +3,7 @@ module github.com/authlete/authlete-go-gin
 go 1.12
 
 require (
-	github.com/BurntSushi/toml v1.2.1 // indirect
-	github.com/authlete/authlete-go v1.1.9
+	github.com/authlete/authlete-go v1.1.10
 	github.com/gin-gonic/gin v1.8.2
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/goccy/go-json v0.10.0 // indirect
