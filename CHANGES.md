@@ -1,6 +1,19 @@
 CHANGES
 =======
 
+v1.0.7 (2022 年 01 月 22 日)
+----------------------------
+
+- `go.mod` 
+    * Updated `authlete-go => v1.1.10`.
+    * Updated `toml => v1.2.1`.
+    * Updated `gin => v1.8.2`.
+    * Updated `locales => v0.14.1`.
+    * Updated `go-json => v0.10.0`.
+    * Updated `go-isatty => v0.0.17`.
+    * Updated `codec => v1.2.8`.
+    * Updated `crypto => v0.5.0`.
+
 v1.0.6 (2022-08-11)
 -------------------
 
